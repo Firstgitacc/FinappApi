@@ -15,14 +15,16 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware to parse JSON bodies
 app.use(cors({
-    origin: 'http://localhost:3000', // Replace with the frontend URL
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',  // Use an environment variable for the frontend URL in production
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     credentials: true // Enable if you need to send cookies or HTTP auth
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/dashboard',dashboardroutes);
-app.use('/account',accountRoutes)
+
+// Register routes
+app.use('/dashboard', dashboardroutes);
+app.use('/account', accountRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

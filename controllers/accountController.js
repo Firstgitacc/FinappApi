@@ -3,10 +3,12 @@ const moment = require('moment');
 
 // Add a new account record
 const addAccount = async (req, res) => {
-    const { date, dcc, vcj, dvs, sc } = req.body
+    const { date, dcc, vcj, dvs, sc } = req.body;
+    console.log("Received data:", { date, dcc, vcj, dvs, sc });
+    const formattedDate = moment(date, 'DD-MM-YYYY').format('DD-MM-YYYY');
     try {
         const account = new Account({
-            date,
+            formattedDate,
             dcc,
             vcj,
             dvs,
@@ -23,7 +25,11 @@ const addAccount = async (req, res) => {
 const getAllAccounts = async (req, res) => {
     try {
         const accounts = await Account.find();
-        res.status(201).json(accounts)
+        const formattedAccounts = accounts.map(account => ({
+            ...account.toObject(),  // Convert mongoose document to plain object
+            formattedDate: moment(account.date).format('DD-MM-YYYY')  // Format the date to DD-MM-YYYY
+        }));
+        res.status(201).json(formattedAccounts)
 
     } catch (error) {
         console.error("There is an error", error);
@@ -38,7 +44,7 @@ const UpdateAccount = async (req, res) => {
     // Create the updated account object with the updated fields
     const updatedAccount = {};
     if (date) {
-        updatedAccount.date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');  // Ensure the date is in the correct format
+        updatedAccount.date = moment(date, 'DD-MM-YYYY').format('DD-MM-YYYY');
     }
     if (dcc) updatedAccount.dcc = dcc;
     if (vcj) updatedAccount.vcj = vcj;

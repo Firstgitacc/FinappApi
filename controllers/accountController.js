@@ -8,7 +8,7 @@ const addAccount = async (req, res) => {
     const formattedDate = moment(date, 'DD-MM-YYYY').format('DD-MM-YYYY');
     try {
         const account = new Account({
-            formattedDate,
+            date: formattedDate,
             dcc,
             vcj,
             dvs,

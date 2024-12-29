@@ -9,7 +9,18 @@ const { createDashboard } = require("../controllers/dashboardController");
 
 // module.exports = router;
 // Define the route to create a new dashboard record
-router.post('/Fn-dashboard', dashboardController.createDashboard);
+//router.post('/Fn-dashboard', dashboardController.createDashboard);
+
+router.post('/Fn-dashboard', async (req, res) => {
+    console.log('POST request received:', req.body);  // Log the incoming data
+    try {
+        await dashboardController.createDashboard(req, res);
+    } catch (error) {
+        console.log("Error in POST /Fn-dashboard route:", error);  // Log error if any
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
 // router.post('/Fn-dashboard', async (req, res) => {
 //     try {
 //         const { name, amount, fromDate, toDate } = req.body;

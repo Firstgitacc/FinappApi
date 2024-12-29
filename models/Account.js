@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const accountSchema = new mongoose.Schema({
     date: {
-        type: string,
+        type: String,
         required: true
     },
     dcc:{

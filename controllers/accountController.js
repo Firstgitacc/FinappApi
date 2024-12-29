@@ -46,7 +46,7 @@ const UpdateAccount = async (req, res) => {
     // Create the updated account object with the updated fields
     const updatedAccount = {};
     if (date) {
-        updatedAccount.date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+       updatedAccount.date = date;
     }
     if (dcc) updatedAccount.dcc = dcc;
     if (vcj) updatedAccount.vcj = vcj;

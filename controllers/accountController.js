@@ -5,10 +5,12 @@ const moment = require('moment');
 const addAccount = async (req, res) => {
     const { date, dcc, vcj, dvs, sc } = req.body;
     console.log("Received data:", { date, dcc, vcj, dvs, sc });
-    const formattedDate = moment(date, 'DD-MM-YYYY').format('DD-MM-YYYY');
+   // const formattedDate = moment(date, 'DD-MM-YYYY').format('DD-MM-YYYY');
+   const formattedDate = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+
     try {
         const account = new Account({
-            formattedDate,
+            date,
             dcc,
             vcj,
             dvs,
@@ -44,7 +46,7 @@ const UpdateAccount = async (req, res) => {
     // Create the updated account object with the updated fields
     const updatedAccount = {};
     if (date) {
-        updatedAccount.date = moment(date, 'DD-MM-YYYY').format('DD-MM-YYYY');
+        updatedAccount.date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
     }
     if (dcc) updatedAccount.dcc = dcc;
     if (vcj) updatedAccount.vcj = vcj;

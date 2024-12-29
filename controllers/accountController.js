@@ -42,6 +42,9 @@ const getAllAccounts = async (req, res) => {
 // Update an account record
 const UpdateAccount = async (req, res) => {
     const { id } = req.params;
+       if (!id) {
+        return res.status(400).json({ message: 'ID is required for update' });
+    }
     const { date, dcc, vcj, dvs, sc } = req.body
     // Create the updated account object with the updated fields
     const updatedAccount = {};

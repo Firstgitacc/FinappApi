@@ -4,11 +4,11 @@ const dashboardController = require('../controllers/dashboardController');
 const Dashboard = require('../models/Dashboard');
 const { createDashboard } = require("../controllers/dashboardController");
 
-// router.post('/Fn-dashboard',dashboardController.createDashboard);
-// //router.post('/Fn-dashboard',createDashboard.createDashboard);
+// Define the route to fetch dashboard data
  router.get('/alldata',dashboardController.getDashboard)
 
 // module.exports = router;
+// Define the route to create a new dashboard record
 router.post('/Fn-dashboard', async (req, res) => {
     try {
         const { name, amount, fromDate, toDate } = req.body;

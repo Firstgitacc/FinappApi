@@ -60,8 +60,8 @@ const getDashboard = async (req, res) => {
 // Edit an existing dashboard record
 const updateDashboard = async (req, res) => {
     try {
-        const { id, name, amount, formattedFromDate, formattedToDate,additionalRows  } = req.body;
-
+        const { id, name, amount, formattedFromDate, formattedToDate, additionalRows } = req.body;
+        console.log("Received data backend:", req.body);
         // Validate required fields
         if (!id || !name || !amount || !formattedFromDate || !formattedToDate) {
             return res.status(400).json({ message: "All fields are required" });
@@ -91,7 +91,7 @@ const updateDashboard = async (req, res) => {
         dashboard.amount = parsedAmount;
         dashboard.fromDate = fromDate;
         dashboard.toDate = toDate;
-        dashboard.additionalRows = additionalRowsadditionalRows || [];
+        dashboard.additionalRows = additionalRows || [];
         // Save the updated record
         const updatedDashboard = await dashboard.save();
 

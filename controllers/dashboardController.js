@@ -91,7 +91,7 @@ const updateDashboard = async (req, res) => {
         dashboard.amount = parsedAmount;
         dashboard.fromDate = fromDate;
         dashboard.toDate = toDate;
-
+        dashboard.additionalRows = additionalRows;
         // Save the updated record
         const updatedDashboard = await dashboard.save();
 

@@ -23,6 +23,7 @@ router.post('/Fn-dashboard', async (req, res) => {
 });
 
 // Route to update an existing record
-router.put('/Fn-dashboard/:id', updateDashboard);
+router.put('/Fn-dashboard/:id', dashboardController.updateDashboard);
+
 
 module.exports = router;

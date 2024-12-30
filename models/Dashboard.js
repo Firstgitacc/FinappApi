@@ -15,7 +15,12 @@ const dashboardSchema = new mongoose.Schema({
     },
     toDate: {
         type: Date,
-        default: Date.now    }
+        default: Date.now
+    },
+    additionalRows: {
+        type: Array, // To store the additional rows (date, amount)
+        default: []
+    }
 });
 
 module.exports = mongoose.model('Dashboard', dashboardSchema);

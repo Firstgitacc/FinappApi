@@ -22,9 +22,9 @@ const accountSchema = new mongoose.Schema({
         type: String,
         required: false
         
-    },finalAmount: {  // Add finalAmount to store the accumulated amount
+    },finalAmount: {
         type: Number,
-        default: 808362  // Default base amount
+        required: true
     }
 
 });

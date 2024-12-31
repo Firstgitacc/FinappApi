@@ -11,7 +11,7 @@ const addAccount = async (req, res) => {
     try {
          // Calculate the final amount based on existing records
          const records = await Account.find();
-         let baseAmount = 808362; // Default base amount
+         let baseAmount = 808362;
          let finalAmount = baseAmount;
  
          // Loop through all records to calculate the final amount
@@ -34,7 +34,12 @@ const addAccount = async (req, res) => {
             finalAmount
         })
         await account.save();
-        res.status(201).json({ message: 'Account record added successfully', record: account });
+        baseAmount = finalAmount; 
+        res.status(201).json({ 
+            message: 'Account record added successfully',
+            record: account,
+            newBaseAmount: baseAmount,
+            newFinalAmount: finalAmount });
     } catch (error) {
         console.error("There is an error", error);
         res.status(500).json({ message: 'Server Error' });
@@ -80,9 +85,26 @@ const UpdateAccount = async (req, res) => {
         if (!result) {
             return res.status(404).json({ message: 'Account record not found' });
         }
+        const records = await Account.find();
+        let baseAmount = 808362; // Default base amount
+        let finalAmount = baseAmount;
+         // Loop through all records to recalculate the final amount
+         records.forEach(record => {
+            const vcjValue = parseFloat(record.vcj) || 0;
+            const dvsValue = parseFloat(record.dvs) || 0;
+            const dccValue = parseFloat(record.dcc) || 0;
+            const scValue = parseFloat(record.sc) || 0;
+            finalAmount += (vcjValue + dvsValue) - (dccValue + scValue);
+        });
+
+        // Update the account record with the new final amount
+        accountToUpdate.finalAmount = finalAmount;
+        await accountToUpdate.save();
         res.status(200).json({
             message: 'Account record updated successfully',
-            record: result,
+            record: accountToUpdate,
+            newBaseAmount: baseAmount,
+            newFinalAmount: finalAmount
         });
 
     } catch (error) {

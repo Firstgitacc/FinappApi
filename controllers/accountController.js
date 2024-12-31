@@ -9,12 +9,29 @@ const addAccount = async (req, res) => {
    const formattedDate = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
 
     try {
+         // Calculate the final amount based on existing records
+         const records = await Account.find();
+         let baseAmount = 808362; // Default base amount
+         let finalAmount = baseAmount;
+ 
+         // Loop through all records to calculate the final amount
+         records.forEach(record => {
+             const vcjValue = parseFloat(record.vcj) || 0;
+             const dvsValue = parseFloat(record.dvs) || 0;
+             const dccValue = parseFloat(record.dcc) || 0;
+             const scValue = parseFloat(record.sc) || 0;
+ 
+             finalAmount += (vcjValue + dvsValue) - (dccValue + scValue);
+         });
+ 
+         // Now, create the new account record
         const account = new Account({
             date,
             dcc,
             vcj,
             dvs,
-            sc
+            sc,
+            finalAmount
         })
         await account.save();
         res.status(201).json({ message: 'Account record added successfully', record: account });

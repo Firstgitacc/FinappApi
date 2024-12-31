@@ -5,13 +5,12 @@ const moment = require('moment');
 const addAccount = async (req, res) => {
     const { date, dcc, vcj, dvs, sc } = req.body;
     console.log("Received data:", { date, dcc, vcj, dvs, sc });
-   // const formattedDate = moment(date, 'DD-MM-YYYY').format('DD-MM-YYYY');
    const formattedDate = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
 
     try {
          // Calculate the final amount based on existing records
          const records = await Account.find();
-         let baseAmount = 808362;
+         let baseAmount = records.length > 0 ? records[records.length - 1].finalAmount : 808362; // Default baseAmount if no records exist
          let finalAmount = baseAmount;
  
          // Loop through all records to calculate the final amount
@@ -86,7 +85,7 @@ const UpdateAccount = async (req, res) => {
             return res.status(404).json({ message: 'Account record not found' });
         }
         const records = await Account.find();
-        let baseAmount = 808362; // Default base amount
+        let baseAmount = records.length > 0 ? records[records.length - 1].finalAmount : 808362;  // Get the last finalAmount
         let finalAmount = baseAmount;
          // Loop through all records to recalculate the final amount
          records.forEach(record => {
@@ -98,12 +97,12 @@ const UpdateAccount = async (req, res) => {
         });
 
         // Update the account record with the new final amount
-        accountToUpdate.finalAmount = finalAmount;
+        result.finalAmount = finalAmount;
         await accountToUpdate.save();
         res.status(200).json({
             message: 'Account record updated successfully',
             record: accountToUpdate,
-            newBaseAmount: baseAmount,
+            newBaseAmount: finalAmount,
             newFinalAmount: finalAmount
         });
 

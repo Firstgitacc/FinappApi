@@ -97,10 +97,10 @@ const UpdateAccount = async (req, res) => {
 
         // Update the account record with the new final amount
         result.finalAmount = finalAmount;
-        await accountToUpdate.save();
+       
         res.status(200).json({
             message: 'Account record updated successfully',
-            record: accountToUpdate,
+            record: result,
             newBaseAmount: finalAmount,
             newFinalAmount: finalAmount
         });

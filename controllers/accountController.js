@@ -10,7 +10,7 @@ const addAccount = async (req, res) => {
     try {
          // Calculate the final amount based on existing records
          const records = await Account.find();
-         let baseAmount = records.length > 0 ? records[records.length - 1].finalAmount : 808362; // Default baseAmount if no records exist
+         let baseAmount = 808362;
          let finalAmount = baseAmount;
  
          // Loop through all records to calculate the final amount
@@ -33,7 +33,6 @@ const addAccount = async (req, res) => {
             finalAmount
         })
         await account.save();
-        baseAmount = finalAmount; 
         res.status(201).json({ 
             message: 'Account record added successfully',
             record: account,

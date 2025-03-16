@@ -84,7 +84,7 @@ const UpdateAccount = async (req, res) => {
             return res.status(404).json({ message: 'Account record not found' });
         }
         const records = await Account.find();
-        let baseAmount = records.length > 0 ? records[records.length - 1].finalAmount : 808362;  // Get the last finalAmount
+        let baseAmount = records.length > 0 ? records[records.length - 1].finalAmount : 10000;  // Get the last finalAmount
         let finalAmount = baseAmount;
          // Loop through all records to recalculate the final amount
          records.forEach(record => {

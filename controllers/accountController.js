@@ -10,7 +10,7 @@ const addAccount = async (req, res) => {
     try {
          // Calculate the final amount based on existing records
          const records = await Account.find();
-         let baseAmount = 808362;
+         let baseAmount = 10000;
          let finalAmount = baseAmount;
  
          // Loop through all records to calculate the final amount
